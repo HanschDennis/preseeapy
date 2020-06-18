@@ -38,11 +38,11 @@ class PRESEEA(Corpus):
         Returns:
             list: List of strings with phrases containing searched phrase
         """
-        with open("example2.html") as file: 
+        with open("example2.html", encoding='utf-8') as file:
             test = file.read()
-        test_result = BeautifulSoup(test, 'html.parser')
+        result = BeautifulSoup(test, 'html.parser')
 
-        result = self.get_results()
+        #result = self.get_results()
         span_list = result.find_all('span')
 
         # Get text matches
@@ -58,7 +58,7 @@ class PRESEEA(Corpus):
             file_name (str): csv file name
         """
         # Get data to write
-        phrases_list = self.retrieve_phrase_data("example2.html")
+        phrases_list = self.retrieve_phrase_data()
 
         # Write into csv file
         with open(file_name, 'w', newline='') as file:
@@ -66,14 +66,14 @@ class PRESEEA(Corpus):
 
             # Write meta data
             writer.writerow(["Corpus", self._corpus_name])
-            wrtier.writerow(["\n"])
+            writer.writerow(["\n"])
             writer.writerow(["Filter"])
             writer.writerow(["City", self._city])
             writer.writerow(["Sex", self._gender])
             writer.writerow(["Age", self._age])
             writer.writerow(["Education", self._education])
             writer.writerow(["Index", "Phrase"])
-            wrtier.writerow(["\n"])
+            writer.writerow(["\n"])
             
             # Write data
             for idx, phrase in enumerate(phrases_list):
